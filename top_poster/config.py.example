@@ -1,0 +1,6 @@
+#global configuration
+user_agent='radio reddit'
+
+#reddit login info
+r_login='your username'
+r_pw='your password'
