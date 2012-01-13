@@ -4,7 +4,7 @@ class RedditIO(object):
     def __init__(self):
         self.top_submission = False
         # create get_top_month sorter
-        reddit.objects.Subreddit.get_top_month = reddit.helpers._get_sorter('top', time='month')
+        reddit.objects.Subreddit.get_top_month = reddit.helpers._get_sorter('top', t='month')
 
         # reddit config
         self.r = reddit.Reddit(user_agent = config.user_agent)
