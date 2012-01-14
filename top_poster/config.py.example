@@ -1,5 +1,5 @@
 #global configuration
-user_agent='radio reddit'
+user_agent='top-poster'
 
 #reddit login info
 r_login='your username'

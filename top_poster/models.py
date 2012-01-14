@@ -27,17 +27,4 @@ class Last(object):
         else:
             return False
 
-# initial tests REMOVE
-#class Struct:
-#    def __init__(self, **entries): 
-#        self.__dict__.update(entries)
 
-#data = {"title":"shoop da whoop", "url":"http://nowhere"}
-#data = Struct(**data);
-
-#last = Last()
-#if last.isStored(data):
-#    print 'already stored'
-#else:
-#    print 'not stored, storing'
-#    last.store(data)
