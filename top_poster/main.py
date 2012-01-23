@@ -18,7 +18,7 @@ def main():
             # post to reddit
             print 'Posting to reddit ...'
             try:
-                rio.postToReddit('octatone',top.title, top.url)
+                rio.postToReddit('music','top on radio reddit: ' + top.title, top.url)
                 # store song
                 print 'Storing new song ...'
                 last.store(top)
