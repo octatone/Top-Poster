@@ -1,4 +1,4 @@
-import reddit, config
+import reddit, config, sys
 
 class RedditIO(object):
     def __init__(self):
@@ -15,7 +15,7 @@ class RedditIO(object):
         self.r.submit(subreddit, title, url=url)
 
     def getTopSong(self):
-        """get the current top song of the month"""
+        """get the current top song of the month in /r/radioreddit"""
 
         # get dem posts
         submissions = self.r.get_subreddit('radioreddit').get_top_month(limit=50)
@@ -28,3 +28,19 @@ class RedditIO(object):
 
         if not self.top_submission:
             return False
+
+    def whitelistCheck(self, subreddit, whitelist):
+        """check removed queue for whitelisted domains"""
+        modqueue = self.r.get_subreddit(subreddit).get_modqueue(limit=10)
+        count = 0
+        for removed in modqueue:
+            for white in whitelist:
+                if removed.domain.find(white) != -1 :
+                    print "Approving %s ..." % (removed.title)
+                    try:
+                        removed.approve()
+                        count += 1
+                    except:
+                        e = sys.exc_info()[1]
+                        print "Error: %s" % e
+        print "%s posts approved." % (count)

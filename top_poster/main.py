@@ -3,7 +3,19 @@ from errors import fatalError
 from models import Last
 import sys
 
+script, task = sys.argv
+
 def main():
+    if task == 'weekday':
+        weekDaily()
+    elif task == 'hour':
+        hourly()
+    else:
+        print 'No task provided. Shutting down.'
+
+def weekDaily():
+    """tasks for weekdays"""
+    # POST NEW TOP SONG
     print 'Logging in to reddit and retriving top rr song for the month ...'
     rio = RedditIO()
     top = rio.getTopSong()
@@ -25,8 +37,14 @@ def main():
                 print 'All done here!'
             except:
                 e = sys.exc_info()[1]
-                print "Error: %s" % e 
+                print "Error: %s" % e
     else:
         fatalError('No top song found, time to die.')
+
+def hourly():
+    """hourly tasks"""
+    # WHITELIST RADIOREDDIT.COM IN THE MOD QUEUE
+    rio = RedditIO()
+    rio.whitelistCheck('radioreddit',['radioreddit.com'])
 
 main()
