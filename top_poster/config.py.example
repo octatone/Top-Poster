@@ -1,6 +1,12 @@
 #global configuration
-user_agent='top-poster'
+user_agent='Top Poster'
 
 #reddit login info
-r_login='your username'
-r_pw='your password'
+r_login=''
+r_pw=''
+
+#twitter info
+t_consumer_key=""
+t_consumer_secret=""
+t_access_token=""
+t_access_token_secret=""

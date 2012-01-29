@@ -1,4 +1,5 @@
 from reddit_io import RedditIO
+from twitter_io import TwitterIO
 from errors import fatalError
 from models import Last
 import sys
@@ -30,14 +31,17 @@ def weekDaily():
             # post to reddit
             print 'Posting to reddit ...'
             try:
-                rio.postToReddit('music','top on radio reddit: ' + top.title, top.url)
+                rio.postToReddit('music','top on radio reddit: %s' % top.title, top.url)
                 # store song
                 print 'Storing new song ...'
                 last.store(top)
                 print 'All done here!'
             except:
                 e = sys.exc_info()[1]
-                print "Error: %s" % e
+                fatalError("Error: %s" % e)
+            print 'Posting to twitter ...'
+            twit = TwitterIO()
+            twit.postToTwitter('New top song: %s %s' % (top.title, top.url))
     else:
         fatalError('No top song found, time to die.')
 

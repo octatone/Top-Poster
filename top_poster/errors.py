@@ -1,4 +1,4 @@
 import sys
 
 def fatalError(reason):
-    sys.exit(reason)
+    sys.exit("Fatal Error: %s" % reason)
