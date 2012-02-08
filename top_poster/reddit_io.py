@@ -14,6 +14,14 @@ class RedditIO(object):
         """post to reddit"""
         self.r.submit(subreddit, title, url=url)
 
+    def postComment(self, submission, comment):
+        submission.add_comment(comment)
+
+    def getNewPosts(self, subreddit, limit=50):
+        """simply get the new posts in a subreddit"""
+        posts = self.r.get_subreddit(subreddit).get_new_by_date()
+        return posts
+
     def getTopSong(self):
         """get the current top song of the month in /r/radioreddit"""
 
