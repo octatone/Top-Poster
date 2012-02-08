@@ -61,7 +61,7 @@ def hourly():
 
     for post in new:
         #print datetime.datetime.fromtimestamp(hour_ago), datetime.datetime.fromtimestamp(post.created_utc), post.title
-        if post.created_utc > hour_ago and re.search('my (band|music|ep|cd|album|song).*free', post.title) and not re.search('cover', post.title):
+        if post.created_utc > hour_ago and re.search('(my|our) (band|music|ep|cd|album|song).*free', post.title, re.IGNORECASE) and not re.search('(cover|remix)', post.title, re.IGNORECASE):
             print 'Leaving comment on:'
             print post.created_utc, post.title, '...'
             rio.postComment(post, choice(comments))
