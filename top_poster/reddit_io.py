@@ -3,8 +3,9 @@ import reddit, config, sys
 class RedditIO(object):
     def __init__(self):
         self.top_submission = False
-        # create get_top_month sorter
+        # create custom gets
         reddit.objects.Subreddit.get_top_month = reddit.helpers._get_sorter('top', t='month')
+        reddit.objects.Subreddit.get_top_week = reddit.helpers._get_sorter('top', t='week')
 
         # reddit config
         self.r = reddit.Reddit(user_agent = config.user_agent)
@@ -22,11 +23,15 @@ class RedditIO(object):
         posts = self.r.get_subreddit(subreddit).get_new_by_date()
         return posts
 
-    def getTopSong(self):
-        """get the current top song of the month in /r/radioreddit"""
+    def getTopSong(self, period='month'):
+        """get the current top song for a period in /r/radioreddit"""
 
         # get dem posts
-        submissions = self.r.get_subreddit('radioreddit').get_top_month(limit=50)
+        if period == 'week':
+            submissions = self.r.get_subreddit('radioreddit').get_top_week(limit=50)
+        else:
+            # default period = month
+            submissions = self.r.get_subreddit('radioreddit').get_top_month(limit=50)
         
         # get the top song submission
         for submission in submissions:

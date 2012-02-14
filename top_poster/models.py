@@ -18,13 +18,16 @@ class Last(object):
 
     def store(self, data):
         """Store data"""
-        if data.title and data.url:
-            write_file = open(self.file,'w')
-            write_file.truncate()
-            write_file.write(data.title + ' ' + data.url)
-            write_file.close()
-            return True
-        else:
-            return False
+        string = ''
+        for item in data:
+            if item.title and item.url:
+                string += item.title + ' ' + item.url
+
+        write_file = open(self.file,'w')
+        write_file.truncate()
+        write_file.write(string)
+        write_file.close()
+
+        return True
 
 

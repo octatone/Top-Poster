@@ -17,33 +17,38 @@ def main():
 def weekDaily():
     """tasks for weekdays"""
     # POST NEW TOP SONG
-    print 'Logging in to reddit and retriving top rr song for the month ...'
+    periods = ['month','week']
+    tops = []
+
+    print 'Logging in to reddit and retriving top rr song for for the week and month'
     rio = RedditIO()
-    top = rio.getTopSong()
-    if top:
-        print 'Top song retrieved:', top
-        # check for old post
-        last = Last()
-        if last.isStored(top):
-            print 'Not a new song.  Done.'
+
+    for period in periods:
+        top = rio.getTopSong(period)
+        tops.append(top)
+        if top:
+            print 'Top song retrieved for', period, top
+            # check for old post
+            last = Last()
+            if last.isStored(top):
+                print 'Not a new song.  Done.'
+            else:
+                print 'Is a new song!'
+                # post to reddit
+                print 'Posting to reddit ...'
+                try:
+                    rio.postToReddit('music','top for the %s on radio reddit: %s' % (period, top.title), top.url)
+                    print 'All done here!'
+                except:
+                    e = sys.exc_info()[1]
+                    fatalError("Error: %s" % e)
+                print 'Posting to twitter ...'
+                twit = TwitterIO()
+                twit.postToTwitter('New top song: %s %s' % (top.title, top.url))
         else:
-            print 'Is a new song!'
-            # post to reddit
-            print 'Posting to reddit ...'
-            try:
-                rio.postToReddit('music','top on radio reddit: %s' % top.title, top.url)
-                # store song
-                print 'Storing new song ...'
-                last.store(top)
-                print 'All done here!'
-            except:
-                e = sys.exc_info()[1]
-                fatalError("Error: %s" % e)
-            print 'Posting to twitter ...'
-            twit = TwitterIO()
-            twit.postToTwitter('New top song: %s %s' % (top.title, top.url))
-    else:
-        fatalError('No top song found, time to die.')
+            fatalError('No top song found, time to die.')
+    # store tops
+    last.store(tops)
 
 def hourly():
     """hourly tasks"""
